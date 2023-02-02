@@ -1,36 +1,35 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { FaChevronDown, FaSave } from 'react-icons/fa';
+import React, { useRef, useState } from 'react';
+import { FaSave } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import SectorDropdownMenu from '../SectorDropdownMenu/SectorDropdownMenu';
+import SectorDropdown from '../SectorDropdown/SectorDropdown';
 
 const SurveyForm = () => {
     // integration of react hooks here
     const [isLoading, setIsLoading] = useState(false);
     const [dropdownValue, setDropdownValue] = useState('');
+    const [userNameError, setUserNameError] = useState(false);
+    const [sectorError, setSectorError] = useState(false);
+    const [termBoxError, setTermBoxError] = useState(false);
 
-    // dropdown props
-    const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
-    const [sectors, setSectors] = useState([]);
-
-    // fetching the sectors data here
-    useEffect(() => {
-        axios('https://coding-challenge-server-jjqg.onrender.com/sectors')
-            .then(res => setSectors(res.data));
-    }, []);
+    // integration of references here
+    const userNameRef = useRef();
+    const sectorRef = useRef();
+    const termBoxRef = useRef();
 
     // this function is handling form submission
     const onFormSubmit = async (e) => {
         e.preventDefault();
 
-        const data = {
-            userName: e.target.userName.value,
-            sector: e.target.selectedSector.value,
-        }
+        console.log(termBoxRef.current.checked);
 
-        const termBox = e.target.termBox.value;
+        if (userNameRef.current.value && sectorRef.current.value && termBoxRef.current.checked) {
 
-        if (termBox) {
+            const data = {
+                userName: userNameRef.current.value,
+                sector: sectorRef.current.value,
+            }
+
             e.target.reset();
             setDropdownValue('');
 
@@ -56,6 +55,12 @@ const SurveyForm = () => {
             });
 
             setIsLoading(false);
+
+        } else {
+
+            setUserNameError(!userNameRef.current.value && true);
+            setSectorError(!sectorRef.current.value && true);
+            setTermBoxError(!termBoxRef.current.checked && true);
         }
     }
 
@@ -69,37 +74,33 @@ const SurveyForm = () => {
                         <label className='label'>
                             <span className='label-text'>Name</span>
                         </label>
-                        <input type='text' name='userName' placeholder='Enter Your Name' className='input input-bordered w-full border-primary text-primary font-semibold' required autoComplete='off' />
+                        <input onClick={() => setUserNameError(userNameError && false)} ref={userNameRef} type='text' name='userName' placeholder='Enter Your Name' className={`input input-bordered w-full ${userNameError ? 'border-red-600 border-2' : 'border-primary border-1'} text-primary font-semibold`} autoComplete='off' />
+                        <label className='label'>
+                            <span className={`label-text-alt text-red-600 ${userNameError ? 'visible' : 'invisible'}`}>Name is required</span>
+                        </label>
                     </div>
                     <div className='form-control w-full mb-5'>
                         <label className='label'>
                             <span className='label-text'>Sectors</span>
                         </label>
-                        <div className='relative flex flex-wrap'>
-                            <div className='w-full border border-primary rounded-lg overflow-hidden'>
-                                <div className=' inline-flex align-middle w-full'>
-                                    <div className='relative flex w-full flex-wrap items-stretch cursor-pointer'>
-                                        <input type='text' name='selectedSector' placeholder='Select Your Sector' value={dropdownValue} className=' px-3 py-3 relative bg-white rounded border-0 outline-none focus:outline-none focus:ring w-full pr-10 text-primary font-semibold text-base cursor-pointer' onClick={() => setDropdownPopoverShow(!dropdownPopoverShow)} readOnly required />
-                                        <span className='z-10 h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base flex items-center justify-center w-8 right-0 '>
-                                            <FaChevronDown className={`${dropdownPopoverShow ? 'rotate-90' : 'rotate-0'} text-primary duration-300`} />
-                                        </span>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <SectorDropdownMenu
-                                dropdownMenu={sectors}
-                                dropdownPopoverShow={dropdownPopoverShow}
-                                dropdownValue={dropdownValue}
-                                setDropdownPopoverShow={setDropdownPopoverShow}
-                                setDropdownValue={setDropdownValue} />
-                        </div>
+                        <SectorDropdown
+                            setDropdownValue={setDropdownValue}
+                            dropdownValue={dropdownValue}
+                            sectorRef={sectorRef}
+                            sectorError={sectorError}
+                            onClick={() => setSectorError(userNameError && false)}
+                        />
+                        <label className='label'>
+                            <span className={`label-text-alt text-red-600 ${sectorError ? 'visible' : 'invisible'}`}>Sector is required</span>
+                        </label>
                     </div>
                     <div className='form-control'>
-                        <label className='label cursor-pointer justify-start'>
-                            <input name='termBox' type='checkbox' className='checkbox border-primary' required />
-                            <span className='label-text ml-3'>Agree to terms</span>
-                        </label>
+                        <div className='w-fit'>
+                            <label className='label cursor-pointer justify-start'>
+                                <input onClick={() => setTermBoxError(termBoxError && false)} ref={termBoxRef} name='termBox' type='checkbox' className={`checkbox ${termBoxError ? 'border-red-600 border-2' : 'border-primary border-1'}`} />
+                                <span className='label-text ml-3'>Agree to terms</span>
+                            </label>
+                        </div>
                     </div>
                     <div className='mt-5 flex justify-center'>
                         <button type='submit' className={`btn btn-primary ${isLoading && 'loading'} w-full md:w-fit px-20 text-white capitalize text-lg hover:bg-base-100 hover:text-primary`}>
