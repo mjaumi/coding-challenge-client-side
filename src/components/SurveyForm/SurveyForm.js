@@ -30,9 +30,16 @@ const SurveyForm = () => {
                 method: 'POST',
                 url: 'http://localhost:5000/addSurvey',
                 data: data
-            }).then(res => {
+            }).then(async (res) => {
                 if (res.status === 200) {
                     toast.success('Survey Saved Successfully!!');
+
+                    await axios('http://localhost:5000/getLatestSurveyData')
+                        .then(res => {
+                            e.target.userName.value = res.data[0].userName;
+                            setDropdownValue(res.data[0].sector);
+                        });
+
                 } else {
                     toast.error('Failed To Save The Survey!!');
                 }
