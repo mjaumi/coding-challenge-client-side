@@ -7,6 +7,7 @@ import SectorDropdown from '../SectorDropdown/SectorDropdown';
 const SurveyForm = () => {
     // integration of react hooks here
     const [isLoading, setIsLoading] = useState(false);
+    const [dropdownValue, setDropdownValue] = useState('');
 
     // this function is handling form submission
     const onFormSubmit = async (e) => {
@@ -21,6 +22,8 @@ const SurveyForm = () => {
 
         if (termBox) {
             e.target.reset();
+            setDropdownValue('');
+
             setIsLoading(true);
 
             await axios({
@@ -59,7 +62,9 @@ const SurveyForm = () => {
                             <span className='label-text'>Sectors</span>
                         </label>
                         <SectorDropdown
-                            dropdownDefaultValue={'Select Your Sector'} />
+                            dropdownPlaceHolder={'Select Your Sector'}
+                            dropdownValue={dropdownValue}
+                            setDropdownValue={setDropdownValue} />
                         <label className='label'>
                             <span className='label-text-alt'>Alt label</span>
                         </label>
