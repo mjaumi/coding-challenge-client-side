@@ -2,6 +2,8 @@
 
 **Live Website:** [https://coding-challenge-client-side.vercel.app](https://coding-challenge-client-side.vercel.app).
 
+**Server Side Code:** [https://github.com/mjaumi/coding-challenge-server-side](https://github.com/mjaumi/coding-challenge-server-side).
+
 ## Description
 
 This project is built as per the requirements of the recruiter.
