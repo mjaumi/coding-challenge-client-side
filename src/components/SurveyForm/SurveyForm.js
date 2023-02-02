@@ -1,13 +1,23 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { FaSave } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { FaChevronDown, FaSave } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import SectorDropdown from '../SectorDropdown/SectorDropdown';
+import SectorDropdownMenu from '../SectorDropdownMenu/SectorDropdownMenu';
 
 const SurveyForm = () => {
     // integration of react hooks here
     const [isLoading, setIsLoading] = useState(false);
     const [dropdownValue, setDropdownValue] = useState('');
+
+    // dropdown props
+    const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
+    const [sectors, setSectors] = useState([]);
+
+    // fetching the sectors data here
+    useEffect(() => {
+        axios('https://coding-challenge-server-jjqg.onrender.com/sectors')
+            .then(res => setSectors(res.data));
+    }, []);
 
     // this function is handling form submission
     const onFormSubmit = async (e) => {
@@ -28,13 +38,13 @@ const SurveyForm = () => {
 
             await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/addSurvey',
+                url: 'https://coding-challenge-server-jjqg.onrender.com/addSurvey',
                 data: data
             }).then(async (res) => {
                 if (res.status === 200) {
                     toast.success('Survey Saved Successfully!!');
 
-                    await axios('http://localhost:5000/getLatestSurveyData')
+                    await axios('https://coding-challenge-server-jjqg.onrender.com/getLatestSurveyData')
                         .then(res => {
                             e.target.userName.value = res.data[0].userName;
                             setDropdownValue(res.data[0].sector);
@@ -59,26 +69,35 @@ const SurveyForm = () => {
                         <label className='label'>
                             <span className='label-text'>Name</span>
                         </label>
-                        <input type='text' name='userName' placeholder='Enter Your Name' className='input input-bordered w-full border-primary text-primary font-semibold' required />
-                        <label className='label'>
-                            <span className='label-text-alt'>Alt label</span>
-                        </label>
+                        <input type='text' name='userName' placeholder='Enter Your Name' className='input input-bordered w-full border-primary text-primary font-semibold' required autoComplete='off' />
                     </div>
                     <div className='form-control w-full mb-5'>
                         <label className='label'>
                             <span className='label-text'>Sectors</span>
                         </label>
-                        <SectorDropdown
-                            dropdownPlaceHolder={'Select Your Sector'}
-                            dropdownValue={dropdownValue}
-                            setDropdownValue={setDropdownValue} />
-                        <label className='label'>
-                            <span className='label-text-alt'>Alt label</span>
-                        </label>
+                        <div className='relative flex flex-wrap'>
+                            <div className='w-full border border-primary rounded-lg overflow-hidden'>
+                                <div className=' inline-flex align-middle w-full'>
+                                    <div className='relative flex w-full flex-wrap items-stretch cursor-pointer'>
+                                        <input type='text' name='selectedSector' placeholder='Select Your Sector' value={dropdownValue} className=' px-3 py-3 relative bg-white rounded border-0 outline-none focus:outline-none focus:ring w-full pr-10 text-primary font-semibold text-base cursor-pointer' onClick={() => setDropdownPopoverShow(!dropdownPopoverShow)} readOnly required />
+                                        <span className='z-10 h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base flex items-center justify-center w-8 right-0 '>
+                                            <FaChevronDown className={`${dropdownPopoverShow ? 'rotate-90' : 'rotate-0'} text-primary duration-300`} />
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <SectorDropdownMenu
+                                dropdownMenu={sectors}
+                                dropdownPopoverShow={dropdownPopoverShow}
+                                dropdownValue={dropdownValue}
+                                setDropdownPopoverShow={setDropdownPopoverShow}
+                                setDropdownValue={setDropdownValue} />
+                        </div>
                     </div>
                     <div className='form-control'>
                         <label className='label cursor-pointer justify-start'>
-                            <input name='termBox' type='checkbox' className='checkbox' required />
+                            <input name='termBox' type='checkbox' className='checkbox border-primary' required />
                             <span className='label-text ml-3'>Agree to terms</span>
                         </label>
                     </div>
