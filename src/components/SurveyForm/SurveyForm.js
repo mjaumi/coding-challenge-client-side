@@ -21,13 +21,12 @@ const SurveyForm = () => {
     const onFormSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(termBoxRef.current.checked);
-
         if (userNameRef.current.value && sectorRef.current.value && termBoxRef.current.checked) {
 
             const data = {
                 userName: userNameRef.current.value,
                 sector: sectorRef.current.value,
+                agreedToTerm: termBoxRef.current.checked
             }
 
             e.target.reset();
@@ -47,6 +46,7 @@ const SurveyForm = () => {
                         .then(res => {
                             e.target.userName.value = res.data[0].userName;
                             setDropdownValue(res.data[0].sector);
+                            e.target.termBox.checked = res.data[0].agreedToTerm;
                         });
 
                 } else {
