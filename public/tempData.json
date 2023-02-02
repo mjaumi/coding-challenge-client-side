@@ -1,0 +1,54 @@
+[
+    {
+        "title": "Manufacturing",
+        "categories": ["Construction materials", "Electronics and Optics"]
+    },
+    {
+        "title": "Food and Beverage",
+        "categories": ["Bakery & confectionery products", "Beverages", "Fish & fish products", "Meat & meat products", "Milk & dairy products", "Sweets & snack food", "Other (Food and Beverage)"]
+    },
+    {
+        "title": "Furniture",
+        "categories": ["Bathroom/sauna", "Bedroom", "Children's room", "Kitchen", "Living room", "Office", "Outdoor", "Project furniture", "Other (Furniture)"]
+    },
+    {
+        "title": "Machinery",
+        "categories": ["Machinery components", "Machinery equipment/tools", "Manufacture of machinery"]
+    }, 
+    {
+        "title": "Maritime",
+        "categories": ["Aluminium and steel workboats", "Boat/Yacht building", "Ship repair and conversion", "Metal structures", "Repair and maintenance service", "Other (Maritime)"]
+    },
+    {
+        "title": "Metalworking",
+        "categories": ["Construction of metal structures", "Houses and buildings", "Metal products", "Metal works", "CNC-machining", "Forgings, Fasteners", "Gas, Plasma, Laser cutting", "MIG, TIG, Aluminum welding"]
+    },
+    {
+        "title": "Plastic and Rubber",
+        "categories": ["Packaging", "Plastic goods", "Plastic processing technology", "Blowing", "Moulding", "Plastics welding and processing", "Plastic profiles"]
+    },
+    {
+        "title": "Printing",
+        "categories": ["Advertising", "Book/Periodicals printing", "Labelling and packaging printing"]
+    },
+    {
+        "title": "Textile and Clothing",
+        "categories": ["Clothing", "Textile"]
+    },
+    {
+        "title": "Wood",
+        "categories": ["Wooden building materials", "Wooden houses", "Other (Wood)"]
+    },
+    {
+        "title": "Other",
+        "categories": ["Creative industries", "Energy technology", "Environment"]
+    },
+    {
+        "title": "Service",
+        "categories": ["Business services", "Engineering", "Information Technology and Telecommunications", "Data processing, Web portals, E-marketing", "Programming, Consultancy", "Software, Hardware", "Telecommunications", "Tourism", "Translation services"]
+    },
+    {
+        "title": "Transport and Logistics",
+        "categories": ["Air", "Rail", "Road", "Water"]
+    }
+]

@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import SectorDropdownMenu from '../SectorDropdownMenu/SectorDropdownMenu';
 
-const SectorDropdown = ({ dropdownName, dropdownDefaultValue, dropdownMenu }) => {
+const SectorDropdown = ({ dropdownName, dropdownDefaultValue }) => {
     // dropdown props
     const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(dropdownDefaultValue);
+    const [sectors, setSectors] = useState([]);
+
+    // fetching the sectors data here
+    useEffect(() => {
+        fetch('http://localhost:5000/sectors')
+            .then(res => res.json())
+            .then(data => setSectors(data));
+    }, []);
 
     return (
         <>
+
             <div className='relative flex flex-wrap'>
                 <div className='w-full border border-primary rounded-lg overflow-hidden'>
                     <div className=' inline-flex align-middle w-full'>
@@ -20,27 +30,12 @@ const SectorDropdown = ({ dropdownName, dropdownDefaultValue, dropdownMenu }) =>
 
                     </div>
                 </div>
-                <div
-                    className={
-                        `${dropdownPopoverShow ? 'scale-y-100' : 'scale-y-0'} bg-base-100 z-50 float-left text-left rounded shadow-lg text-primary origin-top duration-300 absolute top-full w-full overflow-hidden`
-                    }
-                >
-                    {
-                        dropdownMenu.map(item => <button
-                            type='button'
-                            key={item}
-                            className={
-                                `${dropdownPopoverShow ? 'scale-y-100' : 'scale-y-0'} text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-primary hover:text-base-100 duration-300 origin-top`
-                            }
-                            onClick={e => {
-                                setDropdownValue(item);
-                                setDropdownPopoverShow(!dropdownPopoverShow);
-                            }}
-                        >
-                            {item}
-                        </button>)
-                    }
-                </div>
+                <SectorDropdownMenu
+                    dropdownMenu={sectors}
+                    dropdownPopoverShow={dropdownPopoverShow}
+                    dropdownValue={dropdownValue}
+                    setDropdownPopoverShow={setDropdownPopoverShow}
+                    setDropdownValue={setDropdownValue} />
             </div>
         </>
     );

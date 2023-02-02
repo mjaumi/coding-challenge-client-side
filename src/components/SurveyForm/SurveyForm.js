@@ -23,7 +23,7 @@ const SurveyForm = () => {
                         <label className='label'>
                             <span className='label-text'>Sectors</span>
                         </label>
-                        <SectorDropdown dropdownName='sector' dropdownDefaultValue={'Select Your Sector'} dropdownMenu={['All Rounder', 'Batsman', 'Bowler']} />
+                        <SectorDropdown dropdownName='sector' dropdownDefaultValue={'Select Your Sector'} />
                         <label className='label'>
                             <span className='label-text-alt'>Alt label</span>
                         </label>
