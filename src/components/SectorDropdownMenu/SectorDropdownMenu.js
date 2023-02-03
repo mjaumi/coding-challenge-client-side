@@ -6,7 +6,7 @@ const SectorDropdownMenu = ({ dropdownMenu, dropdownPopoverShow, dropdownValue, 
     return (
         <div
             className={
-                `${dropdownPopoverShow ? 'scale-y-100' : 'scale-y-0'} bg-base-100 z-50 float-left text-left rounded shadow-lg text-primary origin-top duration-300 absolute top-full w-full h-[250px] overflow-y-scroll`
+                `${dropdownPopoverShow ? 'scale-y-100' : 'scale-y-0'} bg-base-100 z-50 float-left text-left rounded shadow-lg text-primary origin-top duration-300 absolute top-full w-full h-[200px] md:h-[250px] overflow-y-scroll`
             }
         >
             {

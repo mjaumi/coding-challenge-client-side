@@ -66,11 +66,11 @@ const SurveyForm = () => {
 
     // rendering the survey form component here
     return (
-        <div className='w-[95%] md:w-3/5 bg-base-100 p-5 rounded-lg shadow-xl'>
-            <h3 className='text-2xl font-semibold text-center'>Please enter your name and pick the Sectors you are currently involved in.</h3>
+        <div className='w-[95%] md:w-3/5 bg-base-100 p-3 md:p-5 rounded-lg shadow-xl'>
+            <h3 className='text-lg md:text-2xl font-semibold text-center'>Please enter your name and pick the Sectors you are currently involved in.</h3>
             <div className='mt-14'>
                 <form onSubmit={onFormSubmit}>
-                    <div className='form-control w-full mb-5'>
+                    <div className='form-control w-full mb-2 md:mb-5'>
                         <label className='label'>
                             <span className='label-text'>Name</span>
                         </label>
@@ -79,7 +79,7 @@ const SurveyForm = () => {
                             <span className={`label-text-alt text-red-600 ${userNameError ? 'visible' : 'invisible'}`}>Name is required</span>
                         </label>
                     </div>
-                    <div className='form-control w-full mb-5'>
+                    <div className='form-control w-full mb-2 md:mb-5'>
                         <label className='label'>
                             <span className='label-text'>Sectors</span>
                         </label>
