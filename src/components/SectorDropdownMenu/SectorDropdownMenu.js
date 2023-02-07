@@ -10,7 +10,7 @@ const SectorDropdownMenu = ({ dropdownMenu, dropdownPopoverShow, dropdownValue, 
             }
         >
             {
-                dropdownMenu ?
+                dropdownMenu[0]?._id ?
 
                     dropdownMenu.map(item => <div
                         key={item._id}
@@ -34,6 +34,7 @@ const SectorDropdownMenu = ({ dropdownMenu, dropdownPopoverShow, dropdownValue, 
                     </div>)
 
                     :
+
                     <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                         <button className='btn btn-square bg-transparent border-0 h-20 w-20 loading'></button>
                     </div>
